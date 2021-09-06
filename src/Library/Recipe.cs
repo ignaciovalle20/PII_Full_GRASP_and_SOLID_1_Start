@@ -14,7 +14,21 @@ namespace Full_GRASP_And_SOLID.Library
         private ArrayList steps = new ArrayList();
 
         public Product FinalProduct { get; set; }
+      /*
+        Aplicamos los patrones Expert y SRP para asignar la responsabilidad de calcular el total,
+         ya que la clase receta contiene los pasos, y esta a su vez contiene el costo Subtotal de cada paso.
+      */
+        public double GetProductionCost()
+        {
+                double result = 0;
+                foreach (Step step in this.steps)
+                {
+                    result = result + step.SubTotal;
+                }
 
+                return result;
+        }
+       
         public void AddStep(Step step)
         {
             this.steps.Add(step);
@@ -33,6 +47,7 @@ namespace Full_GRASP_And_SOLID.Library
                 Console.WriteLine($"{step.Quantity} de '{step.Input.Description}' " +
                     $"usando '{step.Equipment.Description}' durante {step.Time}");
             }
+            Console.WriteLine($"Costo total {this.GetProductionCost()}");
         }
     }
 }
